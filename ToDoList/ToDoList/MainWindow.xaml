@@ -1,0 +1,104 @@
+﻿<Window x:Class="ToDoList.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ToDoList"
+        xmlns:viewModels="clr-namespace:ToDoList.ViewModels"
+        mc:Ignorable="d"
+        Title="Lista Zadań" Height="500" Width="400"
+        WindowStartupLocation="CenterScreen">
+
+    <!-- Ustawienie DataContext, który będzie zawierał dane do bindowania -->
+    <Window.DataContext>
+        <viewModels:TaskViewModel />
+    </Window.DataContext>
+
+    <Grid Background="#F0F0F0">
+        <!-- Główny kontener: StackPanel do rozmieszczenia elementów pionowo -->
+        <StackPanel Margin="20" VerticalAlignment="Top" HorizontalAlignment="Stretch">
+
+            <!-- Nagłówek aplikacji -->
+            <TextBlock Text="Lista Zadań" FontSize="20" FontWeight="Bold" 
+                       HorizontalAlignment="Center" Margin="0,0,0,10" />
+
+            <!-- Pole tekstowe do wpisywania nowego zadania, bindowanie do NewTaskName -->
+            <TextBox Text="{Binding NewTaskName, UpdateSourceTrigger=PropertyChanged}"
+                     Width="Auto" MinWidth="250" Height="30" FontSize="14"
+                     Padding="5" BorderThickness="1" BorderBrush="#AAA"
+                     Background="White">
+                <TextBox.Style>
+                    <Style TargetType="TextBox">
+                        <Style.Triggers>
+                            <!-- Zmiana wyglądu, gdy pole tekstowe jest w focusie -->
+                            <Trigger Property="IsFocused" Value="True">
+                                <Setter Property="BorderBrush" Value="#4CAF50"/>
+                                <Setter Property="Background" Value="#E8F5E9"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBox.Style>
+            </TextBox>
+
+            <!-- Przycisk do dodawania zadania, powiązany z komendą AddTaskCommand -->
+            <Button Content="➕ Dodaj Zadanie" Command="{Binding AddTaskCommand}"
+                    Width="Auto" MinWidth="200" Height="35" FontSize="14" FontWeight="Bold"
+                    Background="#4CAF50" Foreground="White"
+                    Margin="0,10,0,10" Cursor="Hand">
+                <Button.Style>
+                    <Style TargetType="Button">
+                        <Style.Triggers>
+                            <!-- Zmiana koloru tła przy najechaniu myszką -->
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#388E3C"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+
+            <!-- Lista zadań, wyświetlana w ListBox -->
+            <Border BorderThickness="1" BorderBrush="#CCC" CornerRadius="10" Background="White">
+                <ListBox ItemsSource="{Binding Tasks}" Background="White" Padding="5">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <!-- Wygląd każdego zadania w liście -->
+                            <Border BorderBrush="#DDD" BorderThickness="0,0,0,1" Padding="5">
+                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+
+                                    <!-- Checkbox, który jest powiązany z właściwością IsCompleted -->
+                                    <CheckBox IsChecked="{Binding IsCompleted}" 
+                                              Command="{Binding DataContext.ToggleTaskCompletionCommand, RelativeSource={RelativeSource AncestorType=Window}}" 
+                                              CommandParameter="{Binding}" 
+                                              Margin="0,0,10,0"/>
+
+                                    <!-- Nazwa zadania -->
+                                    <TextBlock Text="{Binding Name}" FontSize="14" VerticalAlignment="Center"/>
+
+                                    <!-- Przycisk do usuwania zadania -->
+                                    <Button Content="❌" Width="25" Height="25"
+                                            Command="{Binding DataContext.DeleteTaskCommand, RelativeSource={RelativeSource AncestorType=Window}}" 
+                                            CommandParameter="{Binding}" 
+                                            Background="Red" Foreground="White"
+                                            FontWeight="Bold" FontSize="12"
+                                            Margin="10,0,0,0" Cursor="Hand">
+                                        <Button.Style>
+                                            <Style TargetType="Button">
+                                                <Style.Triggers>
+                                                    <!-- Zmiana koloru przy najechaniu myszką -->
+                                                    <Trigger Property="IsMouseOver" Value="True">
+                                                        <Setter Property="Background" Value="#D32F2F"/>
+                                                    </Trigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Button.Style>
+                                    </Button>
+                                </StackPanel>
+                            </Border>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </Border>
+        </StackPanel>
+    </Grid>
+</Window>
