@@ -1,0 +1,9 @@
+To-Do List WPF app using MVVM and SQLite.
+
+Aplikacja pozwala na zarządzanie zadaniami: dodawanie, edytowanie statusu ukończenia i usuwanie. Dane przechowywane są w bazie SQLite, a interfejs oparty jest na wzorcu MVVM. 
+
+- **Dodawanie zadania**: Wprowadź nazwę i kliknij "Dodaj Zadanie".
+- **Zmiana statusu**: Zaznacz checkbox, by oznaczyć zadanie jako ukończone.
+- **Usuwanie zadania**: Kliknij „Usuń” obok zadania.
+
+Aplikacja korzysta z **Entity Framework Core** do zarządzania danymi.

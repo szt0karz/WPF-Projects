@@ -1,0 +1,8 @@
+Notatnik to aplikacja WPF umożliwiająca tworzenie, edytowanie, zapisywanie i otwieranie plików tekstowych. Użytkownik może również wstawiać symbole z listy do wybranego tekstu. Program obsługuje:
+
+- Tworzenie nowej notatki
+- Otwieranie zapisanych plików
+- Zapis do pliku
+- Wstawianie wybranych symboli (np. emotikonów)
+
+Aplikacja korzysta z modalu do wyboru symboli, który jest wyświetlany po kliknięciu przycisku "Wstaw symbol".
